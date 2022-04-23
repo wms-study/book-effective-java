@@ -109,3 +109,5 @@ sum 변수를 Long으로 선언하여 long 타입인 i가 Long 타입인 sum에 
   - 이번 아이템이 "기존 객체를 재사용해야 한다면 새로운 객체를 만들지 마라"라면, 
   - 방어적 복사는 "새로운 객체를 만들어야 한다면 기존 객체를 재사용하지 마라"이다
   - 방어적 복사가 필요한 상황에서 객체를 재사용했을 때의 피해가, 필요 없는 객체를 반복 생성했을 때의 피해보다 훨씬 크다.
+
+cf) [[JVM] 객체 재사용 - Reference 종류, WeakHashMap](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=kbh3983&logNo=221001751572)
