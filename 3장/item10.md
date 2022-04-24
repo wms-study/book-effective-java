@@ -59,5 +59,115 @@
 #### equals 일반 규약을 어길 경우
 - 원인 코드 파악이 어려워짐
 - 세상에 홀로 존재하는 클래스는 없다 by John Donne
-  - 따라서 한 클래스의 인스턴스가 다른 곳으로 빈번히 전달될 것임(equals 규약을 어길 경우 다른 곳에 영향이 갈 수 있음을 표현하려고 한 것 같음)
+  - 따라서 한 클래스의 인스턴스가 다른 곳으로 빈번히 전달될 것임
+    - 해당 객체를 사용하는 다른 객체들이 어떻게 반응할 지 알 수 없음
+  
+#### 일반 규약 상세 내용
+- 대칭성
+  ```
+  public final class CaseInsensitiveString {
+    private final String s;
+    public CaseInsensitiveString(String s) {
+      this.s = Objects.requireNonNull(s);
+    }
+    
+    @Override public boolean equals(Object o) {
+      if (o instanceof CaseInsensitiveString)
+        return s.equalsIgnoreCase((CaseInsensitiveString) o).s;
+      if (o instanceof String)
+        return s.qualsIgnoreCase((String) o);
+      return false
+    }
+  }
+  
+  CaseInsensitiveString cis = new CaseInsensitiveString("Ex1");
+  String s = "ex1";
+  
+  cis.equals(s); // true
+  s.equals(cis); // false 
+  // 대칭성 위배
+  
+  List<CaseInsensitiveString> list = new ArrayList<>();
+  list.add(cis);
+  list.contains(s); // true를 반환할 가능성이 있음 -> 반응을 알 수 없음
+  ```
+  
+  변해야 할 결과 (String & CaseInsensitiveString 은 동치관계가 불가능하다고 생각하고 버려야 함)
 
+  ```
+  public final class CaseInsensitiveString {
+    private final String s;
+    public CaseInsensitiveString(String s) {
+      this.s = Objects.requireNonNull(s);
+    }
+    
+    @Override public boolean equals(Object o) {
+        return o instanceof CaseInsensitiveString &&
+          ((CaseInsensitiveString) o).s.equalsIgnoreCase(s);
+    }
+  }
+  ```
+- 추이성
+  - 구체 클래스를 확장해 새로운 값을 추가하면서 equals 규약을 만족시킬 방법은 존재하지 않음
+  - 리스코프 치환 원칙에 따르면, 어떤 타입의 모든 메서드가 하위 타입에서도 똑같이 잘 작동해야 한다.
+    - point 클래스를 상속받은 어떠한 클래스든 point로써 활용될 수 있어야 한다.
+      - but getClass 검사로 하는 경우는 상위 클래스의 point와 상속받은 클래스의 클래스가 다르기 때문에 equals를 항상 false를 반환한다.
+        - instanceof 로 하면 true 반환 가능하다.
+
+  - 상속을 이용한 값 추가는 아니지만 컴포지션을 이용한다면 만족시킬 방법이 존재하게 된다.
+  ```
+  public class ColorPoint {
+    private final Point p;
+    private final Color c;
+    public ColorPoint(int x, int y, Color color) {
+      point = new Point(x, y);
+      this.color = Objects.requeireNonNull(color);
+    }
+  
+    /*
+      point 뷰를 반환
+    */
+    public POint asPoint() {
+      return point;
+    }
+    
+    @Override public boolean equals(Object o) {
+      if(!(o instanceof ColorPoint))
+          return false;
+      ColorPoint cp = (ColorPoint) o;
+      return cp.point.equals(point) && cp.color.equals(color); // point를 바로 비교
+    }
+  }
+  ```
+  
+  - java.sql.Timestamp는 대표적으로 java.util.Date를 확장한 후 nanoseconds를 추가했기 때문에 대칭성을 위배하고 있다.
+    - 따라서 equals를 만족하지 않는 경우가 있다. 절대 따라해서는 안된다.
+  
+- 일관성
+  - 두 객체가 같다면 영원히 같아야 한다는 뜻
+    - 가변 객체의 경우
+      - 비교 시점에 따라 같을수도 다를수도 있음
+    - 불변 객체의 경우
+      - 한번 다르면 끝까지 달라야 한다.
+  - 불변 클래스의 경우 불변 클래스로 만들 지 심사숙고해야 함
+    - equals가 한번 같다고 한 객체는 영원히 같다고 답하고, 다르다고 한 객체는 영원히 다르다고 답해야 하기 때문
+  - 신뢰할 수 없는 자원이 끼어들게 해서는 안 됨
+    - 유동ip와 같은 요소들이 equals에 들어가게 되면 같은 URL로 요청하는 것이라도 일관성을 유지할 수 없게 됨
+  
+- null 아님
+  - 묵시적 null 검사가 더 나음
+  ```
+    // 명시적 null 검사
+    @Override public boolean equals(Object o) {
+      if(o == null)
+        return false;
+    }
+  
+    // 묵시적 null 검사 -> 이 쪽이 더 나음 instanceof 는 null을 자동으로 false로 반환 해 줌
+    @Override public boolean equals(Object o) {
+      if(!(o instanceof ColorPoint))
+          return false;
+    }
+  ```
+
+  
