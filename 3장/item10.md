@@ -79,7 +79,9 @@
       return false
     }
   }
-  
+  ```
+
+  ```
   CaseInsensitiveString cis = new CaseInsensitiveString("Ex1");
   String s = "ex1";
   
@@ -185,6 +187,8 @@
   - 동기화용 lock 필드와 같이 논리적 상태와 관련 없는 필드는 비교하면 안 됨
 
 extra. 대칭적인가? 추이성이 있는가? 일관적인가? 자문해 보자
+
+---
 
 #### 마지막 주의 사항
 - equals 재정의할 때는 hashcode도 반드시 재정의 할 것
