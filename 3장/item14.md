@@ -1,4 +1,4 @@
-#item 10 Comparable을 구현할 지 고려하라
+# item 14 Comparable을 구현할 지 고려하라
 
 ---
 
