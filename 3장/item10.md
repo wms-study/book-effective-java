@@ -129,7 +129,7 @@
     /*
       point 뷰를 반환
     */
-    public POint asPoint() {
+    public Point asPoint() {
       return point;
     }
     
