@@ -54,8 +54,16 @@ public int hashCode() {
 - equals 비교에 사용되지 않은 필드는 반드시 제외해야 한다.
 - ii.e에서 31 * result는 필드를 곱하는 순서에 따라 result 값이 달라지게 한다. 
 - ii.e에서 31을 곱할 숫자로 정한 이유는 31이 홀수면서 소수(prime number)이기 때문이다.
-    - 짝수라면 숫자를 곱해 오버플로가 발생하면 정보를 잃게 된다. (시프트로 하나가 밀려서)
-- 소수를 곱하는 이유는 해시 함수의 분배가 좋아지기 때문
+    - 짝수라면 숫자를 곱해 오버플로가 발생하면 정보를 잃게 된다. [시프트로 하나가 밀려서](https://velog.io/@indongcha/hashCode%EC%99%80-31)
+    - 홀수라면 왜 괜찮을까?
+- 소수를 곱하는 이유는 해시 함수의 분배가 좋아지기 때문 [링크](https://stackoverflow.com/questions/3613102/why-use-a-prime-number-in-hashcode)
+
+별개
+- [hashMap에서 해시충돌 시 저장](https://leedo.me/36)은 16비트 오른쪽으로 이동 후 XOR연산으로 마스킹 처리
+    - [D2 참조](https://d2.naver.com/helloworld/831311)
+- [hashMap 해결](https://cantcoding.tistory.com/90)
+    - [이유](https://mhwan.tistory.com/59)
+
 
 ---
 
