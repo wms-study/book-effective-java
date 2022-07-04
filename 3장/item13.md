@@ -133,9 +133,9 @@ public PhoneNumber clone() {
 }
 ```
 
-- 공변 반환 타이핑을 이용해 (PhoneNumber) super.clone() 과 같은 형태로 하는 것이 가능하고 권장함
+- [공변 반환 타이핑](https://www.javatpoint.com/covariant-return-type)을 이용해 (PhoneNumber) super.clone() 과 같은 형태로 하는 것이 가능하고 권장함
   - 재정의한 메서드의 반환 타입은 상위클래스의 메서드가 반환하면 타입의 하위 타입일 수 있음 (Parent)
-- clone 메서드는 unchecked exception을 던질 수 있게 설계되었다.
+- clone 메서드는 CloneNotSupportedException인 checked exception을 던질 수 있게 설계되었다.
 
 ---
 
@@ -168,7 +168,7 @@ public PhoneNumber clone() {
   ```
   
   - 배열 elements.clone의 결과를 따로 형변환할 필요는 없음 배열 복제 시 원본 배열과 똑같은 배열을 반환하기 때문
-    - clone 메서드를 사용하는 것을 권장한다 (배열은 clone 기느응ㄹ 제대로 사용하는 유일한 예)
+    - clone 메서드를 사용하는 것을 권장한다 (배열은 clone 기능을 제대로 사용하는 유일한 예)
     
   - elements 필드가 final 이었다면 clone이 되지 않았을 것이다. final 필드에는 새로운 값을 할당할 수 없기 때문
     - Cloneable 아키텍처의 '가변 객체를 참조하는 필드는 final로 선언하라' 의 일반 용법과 충돌
@@ -205,7 +205,7 @@ public PhoneNumber clone() {
     }
   }
   ```
-  - 위의 경우 복제본이 자신만의 버킷을 갖지만 배열 갖지만 버킷 배열안의 Entry가 같은 곳을 참조하여 예기치 않게 동작할 가능성이 생김
+  - 위의 경우 복제본이 자신만의 버킷 배열을 갖지만 버킷 배열안의 Entry가 같은 연결리스트를 참조하여 예기치 않게 동작할 가능성이 생김
   - 해결법
     1. 재귀 호출로 deepCopy를 이용
         - 재귀 호출 때문에 원소 수 만큼 스택 프레임을 소비
