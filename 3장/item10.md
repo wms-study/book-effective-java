@@ -114,7 +114,32 @@
   - 리스코프 치환 원칙에 따르면, 어떤 타입의 모든 메서드가 하위 타입에서도 똑같이 잘 작동해야 한다.
     - point 클래스를 상속받은 어떠한 클래스든 point로써 활용될 수 있어야 한다.
       - but getClass 검사로 하는 경우는 상위 클래스의 point와 상속받은 클래스의 클래스가 다르기 때문에 equals를 항상 false를 반환한다.
-        - instanceof 로 하면 true 반환 가능하다.
+      - instanceof 로 하면 true 반환 가능하다.
+      ```
+      public class Parent {
+          private String a;
+      }
+      
+      public class Child extends Parent {
+          private String b;
+          
+          @Override 
+          public boolean equals(Object o) {
+            if(!(o instanceof Parent))
+                return false;
+            Child c = (Child) o;
+            return c.a.equals(a); // true
+          }
+          
+          @Override 
+          public boolean equals(Object o) {
+            if((o.getClass() != this.getClass()))
+                return false; // false
+            Child c = (Child) o;
+            return c.a.equals(a);
+          }
+      }
+      ```
 
   - 상속을 이용한 값 추가는 아니지만 컴포지션을 이용한다면 만족시킬 방법이 존재하게 된다.
   ```
