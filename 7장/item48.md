@@ -82,3 +82,12 @@ static long pi(long n) {
         .count();
 }
 ```
+
+
+우리 예제
+[병렬화 foreach](https://www.4te.co.kr/876)
+```java
+// inventory 에 다수 포진
+SettlementDailyStockSnapshotJobConfig
+parallel
+```

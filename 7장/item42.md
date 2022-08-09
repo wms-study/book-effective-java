@@ -84,3 +84,24 @@
         - 따라서 람다를 직렬화하는 일은 극히 삼가야한다.
         - 직렬화 해야만하는 함수 객체가 있다면 private 정적 중첩 클래스의 인스턴스를 사용하자. 
 
+우리 예제
+
+```java
+// metadata 
+// 너무 길어 검색해서 하는 것으로 대체
+public enum StorageSpaceAttributeGroupKey {
+    
+}
+```
+
+```java
+outboundOrders.sort(new Comparator<>() {
+    @Override
+    public int compare(OutboundOrder o1, OutboundOrder o2) {
+        return ComparisonChain.start()
+        .comapre(o1.getState().getSortNo(), o2.getState().getSortNo(), Ordering.natural().reversed())
+        .compare(o1.getUpdatedAt(), o2.getUpdatedAt(), Ordering.natural().reversed())
+        .result();
+    }
+});
+```

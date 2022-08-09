@@ -82,3 +82,10 @@ Map<String, Long> wordsMap = words.collect(gorupingBy(word -> alphabetize(word),
   - 해당 버전을 사용하면 맵과 그 안에 담긴 컬렉션의 타입을 모두 지정할 수 있다. 
   - 값이 TreeSet인 TreeMap을 반환하는 수집기를 만들 수 있다.[예제 3.7](https://umanking.github.io/2021/07/31/java-stream-grouping-by-example/)
   
+우리 예제
+```
+inventory 검색 해 볼 것
+pickedSkus.forEach(
+
+)
+```

@@ -94,3 +94,23 @@
   - 클라이언트에게 모호함만을 안겨줄 뿐이고 이로 인해 문제가 될 수 있다. (예제 찾기)
   
 - 서로 다른 함수형 인터페이스를 같은 위치의 인수로 사용하는 다중정의를 피하는 것이다.
+
+우리 예제
+```java
+// inventory
+UnaryOperator -> StandardDateType 
+```
+```java
+@FunctionalInterface
+public interface Action<V extends Vo> {
+    // 메서드가 1개만 존재!
+    void action(Event event, State state, V vo);
+    
+    default Action<V> andThen(Action<V> after) {
+        return (event, resultState, vo) -> {
+          action(event, resultState, vo);
+          after.action(event, resultState, vo);
+        };
+    }
+}
+```

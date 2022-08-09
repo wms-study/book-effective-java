@@ -48,7 +48,9 @@
 ### 함수 객체로는 할 수 없지만 코드블록으로는 할 수 있는 일들
 
 - 코드 블록에서는 범위 안의 지역변수를 읽고 수정할 수 있다.
-  - but 람다에서는 final이거나 사실상 final인 변수만 읽을 수 있고 지역 변수를 수정하는 건 불가능하다. ******
+  - but 람다에서는 final이거나 사실상 final인 변수만 읽을 수 있고 지역 변수를 수정하는 건 불가능하다. 
+    - [****** ‘람다식에서 참조하는 외부 지역 변수는 final 혹은 effectively final 이어야한다.’](https://vagabond95.me/posts/lambda-with-final/)
+    - [밸둥형](https://www.baeldung.com/java-lambda-effectively-final-local-variables#:~:text=The%20basic%20reason%20this%20won,modify%20the%20start%20method%20parameter.)
   - 코드 블록에서는 return 문을 사용해 메서드에서 빠져나가거나 break, continue 문으로 블록 바깥의 반복문을 종료하거나 반복을 한 번 건너뛸 수 있다.
   - 또한 메서드 선언에 명시된 검사 예외를 던질 수 있다. 
   - 람다에서는 아무것도 할 수 없다.
@@ -64,9 +66,24 @@
 
 ### 스트림으로 처리하기 어려운 일 
 
-- 한 데이터가 파이프라인의 여러 단계를 통과할 때 데이터의 각 단계에서의 값들에 동시에 접근하기는 어렵다.
+- 한 데이터가 파이프라인의 여러 단계를 통과할 때 데이터의 각 단계에서의 값들에 동시에 접근하기는 어렵다. (1 -> 2 -> 3 -> 4 통과했을 때 2, 3을 접근하기 어렵다는 말)
   - 스트림 파이프라인은 일단 한 값을 다른 값에 매핑하고 나면 원래의 값은 잃는 구조이기 때문이다.
   - 원래 값과 새로운 값의 쌍을 저장하는 객체를 사용해 매핑하는 우회 방법이 있으나 만족스러운 해법은 아니다.
   
-
 - 스트림을 반환하는 메서드의 이름은 원소의 정체를 알려주는 복수 명사를 쓰기를 강력히 추천 -> 스트림 파이프라인의 가독성이 크게 좋아질 것이다.
+```java
+static Stream<BigInteger> primes() {
+    return Stream.iterate(TWO, BigInteger::nextProbablePrime);
+}
+```
+
+우리 예제
+```
+inventory
+spaceStockSearcher -> Stream<SpaceStockDtoV1> stream
+```
+
+```
+inbound
+AtomicBoolean InboundCommandApplication
+```

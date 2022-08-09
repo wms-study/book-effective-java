@@ -54,3 +54,10 @@
     // 람다식으로는 불가능하다. 
     // 제네릭 람다식이라는 문법이 존재하지 않기 때문
     ```
+
+우리 예제
+```java
+Optional.ofNullable(skuImages).orElse(Collections.emptyList())
+    .stream()
+    .collect(Collectors.toMap(SkuImage::getPriority, SkuImage::getImagePath, (a, b) -> a))
+```
