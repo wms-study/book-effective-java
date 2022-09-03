@@ -40,7 +40,7 @@
 
 - IF 다른 스레드를 멈추는 작업이 있을 때
   - Thread stop 사용하지 말자
-    - Thread.stop 메서드는 안전하지 않아 이미 오래전에 사용 자제(Deprecated) API로 지정 (데이터 훼손 될 수 있음)
+    - [Thread.stop 메서드는 안전하지 않아](https://docs.oracle.com/javase/6/docs/technotes/guides/concurrency/threadPrimitiveDeprecation.html) 이미 오래전에 사용 자제(Deprecated) API로 지정 (데이터 훼손 될 수 있음)
     
 - 스레드를 멈추는 올바른 방법
   - 첫 번째 스레드는 자신의 boolean 필드를 폴링하면서 그 값이 true가 되면 멈춘다.
